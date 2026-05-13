@@ -244,7 +244,18 @@ namespace Chapter3
               (fun hnq : ¬q => absurd (hpq hp) hnq))
           (fun hnp : ¬p => Or.inl hnp)
       )
-    example : (¬q → ¬p) → (p → q) := sorry
+
+    example : (¬q → ¬p) → (p → q) :=
+      (fun hnqnp : ¬q → ¬p =>
+        Or.elim (em q)
+          (fun hq : q => (fun _ : p => hq))
+          (fun hnq : ¬q =>
+            (fun hp : p =>
+              absurd hp (hnqnp hnq)
+            )
+          )
+      )
+
     example : p ∨ ¬p := em p
     example : (((p → q) → p) → p) := sorry
   end WithClassical

@@ -235,7 +235,15 @@ namespace Chapter3
           (fun hp : p => And.intro hp (fun hq : q => hnpq (fun _ : p => hq)))
           (fun hnp : ¬p => absurd (fun hp : p => absurd hp hnp) hnpq))
 
-    example : (p → q) → (¬p ∨ q) := sorry
+    example : (p → q) → (¬p ∨ q) :=
+      (fun hpq : p → q =>
+        Or.elim (em p)
+          (fun hp : p =>
+            Or.elim (em q)
+              (fun hq : q => Or.inr hq)
+              (fun hnq : ¬q => absurd (hpq hp) hnq))
+          (fun hnp : ¬p => Or.inl hnp)
+      )
     example : (¬q → ¬p) → (p → q) := sorry
     example : p ∨ ¬p := em p
     example : (((p → q) → p) → p) := sorry

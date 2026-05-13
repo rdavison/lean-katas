@@ -258,7 +258,6 @@ namespace Chapter3
 
     example : p ∨ ¬p := em p
 
-    /- NOTE: This one is hard! -/
     example : (((p → q) → p) → p) :=
       (fun hf : (p → q) → p =>
         Or.elim (em p)
@@ -268,6 +267,7 @@ namespace Chapter3
   end WithClassical
 
   /- 3. Prove ¬(p ↔ ¬p) without using classical logic.  -/
+  /- NOTE: This one is hard! -/
   example : ¬(p ↔ ¬p) :=
     (fun h : (p ↔ ¬p) =>
       Iff.elim

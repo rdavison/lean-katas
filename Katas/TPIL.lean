@@ -267,7 +267,14 @@ namespace Chapter3
   end WithClassical
 
   /- 3. Prove ¬(p ↔ ¬p) without using classical logic.  -/
-  example : ¬(p ↔ ¬p) := sorry
+  example : ¬(p ↔ ¬p) :=
+    (fun h : (p ↔ ¬p) =>
+      Iff.elim
+        (fun (hl : p → ¬p) (hr : ¬p → p) =>
+          have np : ¬p := fun hp => hl hp hp
+          np (hr np)
+        ) h
+    )
 end Chapter3
 
 namespace Chapter4

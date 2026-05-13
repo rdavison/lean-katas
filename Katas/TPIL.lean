@@ -257,7 +257,13 @@ namespace Chapter3
       )
 
     example : p ∨ ¬p := em p
-    example : (((p → q) → p) → p) := sorry
+
+    example : (((p → q) → p) → p) :=
+      (fun hf : (p → q) → p =>
+        Or.elim (em p)
+          (fun hp : p => hp)
+          (fun hnp : ¬p => hf (fun hp : p => absurd hp hnp))
+      )
   end WithClassical
 
   /- 3. Prove ¬(p ↔ ¬p) without using classical logic.  -/

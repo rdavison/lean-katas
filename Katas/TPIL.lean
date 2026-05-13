@@ -258,6 +258,7 @@ namespace Chapter3
 
     example : p ∨ ¬p := em p
 
+    /- NOTE: This one is hard! -/
     example : (((p → q) → p) → p) :=
       (fun hf : (p → q) → p =>
         Or.elim (em p)

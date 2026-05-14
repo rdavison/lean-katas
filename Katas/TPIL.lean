@@ -351,11 +351,19 @@ namespace Chapter4
       (fun (h : ∀ x, r → p x) (hr : r) (x : α) => h x hr)
       (fun (h : r → ∀ x, p x) (x : α) (hr : r) => h hr x)
 
-  /- 3. Consider the “barber paradox,” that is, the claim that in a certain town there is a (male) barber that shaves all and only the men who do not shave themselves. Prove that this is a contradiction: -/
-  variable (men : Type) (barber : men)
-  variable (shaves : men → men → Prop)
+  /- 3. Consider the “barber paradox,” that is, the claim that in a certain town there is a (male) barber that
+        shaves all and only the men who do not shave themselves. Prove that this is a contradiction: -/
+  variable (man : Type) (barber : man)
+  variable (shaves : man → man → Prop)
 
-  example (h : ∀ x : men, shaves barber x ↔ ¬ shaves x x) : False := sorry
+  example (h : ∀ x : man, shaves barber x ↔ ¬ shaves x x) : False :=
+    Iff.elim
+      (fun (hl :   shaves barber barber → ¬ shaves barber barber)
+           (hr : ¬ shaves barber barber →   shaves barber barber) =>
+        have nshaves : ¬ shaves barber barber := (fun (h2 : shaves barber barber) => hl h2 h2)
+        nshaves (hr nshaves)
+      )
+      (h barber)
 
   /- 4. Remember that, without any parameters, an expression of type Prop is just an assertion. Fill in the definitions of prime and Fermat_prime below, and construct each of the given assertions. For example, you can say that there are infinitely many primes by asserting that for every natural number n, there is a prime number greater than n. Goldbach's weak conjecture states that every odd number greater than 5 is the sum of three primes. Look up the definition of a Fermat prime or any of the other statements, if necessary. -/
   def even (n : Nat) : Prop := sorry

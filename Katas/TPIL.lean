@@ -394,7 +394,11 @@ namespace Chapter4
         hr
       )
 
-    example (a : α) : r → (∃ x : α, r) := sorry
+    example (a : α) : r → (∃ _ : α, r) :=
+      (fun hr : r =>
+        ⟨a, hr⟩
+      )
+
     example : (∃ x, p x ∧ r) ↔ (∃ x, p x) ∧ r := sorry
     example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) := sorry
 

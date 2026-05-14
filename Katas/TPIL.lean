@@ -463,36 +463,9 @@ namespace Chapter5
   namespace Chapter4WithTactics
     /- 1. Prove these equivalences -/
     variable (α : Type) (p q : α → Prop)
-    example : (∀ x, p x ∧ q x) ↔ (∀ x, p x) ∧ (∀ x, q x) :=
-      Iff.intro
-        (fun h : ∀ x, p x ∧ q x =>
-          And.intro
-            (fun x : α => (h x).left)
-            (fun x : α => (h x).right)
-        )
-        (fun h : (∀ x, p x) ∧ (∀ x, q x) =>
-          (fun x : α =>
-            And.intro (h.left x) (h.right x)
-          )
-        )
-
-    example : (∀ x, p x → q x) → (∀ x, p x) → (∀ x, q x) :=
-      (fun hxpq : ∀ x, p x → q x =>
-        (fun hxp : ∀ x, p x =>
-          (fun x : α =>
-            (hxpq x) (hxp x)
-          )
-        )
-      )
-
-    example : (∀ x, p x) ∨ (∀ x, q x) → ∀ x, p x ∨ q x :=
-      (fun hxpxq : (∀ x, p x) ∨ (∀ x, q x) =>
-        (fun x : α =>
-          Or.elim hxpxq
-            (fun hxp : ∀ x, p x => Or.inl (hxp x))
-            (fun hxq : ∀ x, q x => Or.inr (hxq x))
-        )
-      )
+    example : (∀ x, p x ∧ q x) ↔ (∀ x, p x) ∧ (∀ x, q x) := sorry
+    example : (∀ x, p x → q x) → (∀ x, p x) → (∀ x, q x) := sorry
+    example : (∀ x, p x) ∨ (∀ x, q x) → ∀ x, p x ∨ q x := sorry
 
     /- 2. It is often possible to bring a component of a formula outside a universal quantifier, when it does not depend on the quantified variable. Try proving these (one direction of the second of these requires classical logic): -/
     variable (α : Type) (p q : α → Prop)
@@ -503,10 +476,10 @@ namespace Chapter5
     example : (∀ x, r → p x) ↔ (r → ∀ x, p x) := sorry
 
     /- 3. Consider the “barber paradox,” that is, the claim that in a certain town there is a (male) barber that shaves all and only the men who do not shave themselves. Prove that this is a contradiction: -/
-    variable (men : Type) (barber : men)
-    variable (shaves : men → men → Prop)
+    variable (man : Type) (barber : man)
+    variable (shaves : man → man → Prop)
 
-    example (h : ∀ x : men, shaves barber x ↔ ¬ shaves x x) : False := sorry
+    example (h : ∀ x : man, shaves barber x ↔ ¬ shaves x x) : False := sorry
 
     /- 4. Remember that, without any parameters, an expression of type Prop is just an assertion. Fill in the definitions of prime and Fermat_prime below, and construct each of the given assertions. For example, you can say that there are infinitely many primes by asserting that for every natural number n, there is a prime number greater than n. Goldbach's weak conjecture states that every odd number greater than 5 is the sum of three primes. Look up the definition of a Fermat prime or any of the other statements, if necessary. -/
     def even (n : Nat) : Prop := sorry

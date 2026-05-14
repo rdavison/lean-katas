@@ -399,7 +399,19 @@ namespace Chapter4
         ⟨a, hr⟩
       )
 
-    example : (∃ x, p x ∧ r) ↔ (∃ x, p x) ∧ r := sorry
+    example : (∃ x, p x ∧ r) ↔ (∃ x, p x) ∧ r :=
+      Iff.intro
+        (fun h : ∃ x, p x ∧ r =>
+          have ⟨x, ⟨hpx, hr⟩⟩ := h
+          And.intro
+            ⟨x, hpx⟩
+            hr
+        )
+        (fun h : (∃ x, p x) ∧ r =>
+          have ⟨⟨x, hpx⟩, hr⟩ := h
+          ⟨x, ⟨hpx, hr⟩⟩
+        )
+
     example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) := sorry
 
     example : (∀ x, p x) ↔ ¬ (∃ x, ¬ p x) := sorry

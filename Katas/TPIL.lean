@@ -365,14 +365,20 @@ namespace Chapter4
       )
       (h barber)
 
-  /- 4. Remember that, without any parameters, an expression of type Prop is just an assertion. Fill in the definitions of prime and Fermat_prime below, and construct each of the given assertions. For example, you can say that there are infinitely many primes by asserting that for every natural number n, there is a prime number greater than n. Goldbach's weak conjecture states that every odd number greater than 5 is the sum of three primes. Look up the definition of a Fermat prime or any of the other statements, if necessary. -/
-  def even (n : Nat) : Prop := sorry
+  /- 4. Remember that, without any parameters, an expression of type Prop is just an assertion.
+        Fill in the definitions of prime and Fermat_prime below, and construct each of the given
+        assertions. For example, you can say that there are infinitely many primes by asserting
+        that for every natural number n, there is a prime number greater than n. Goldbach's weak
+        conjecture states that every odd number greater than 5 is the sum of three primes. Look
+        up the definition of a Fermat prime or any of the other statements, if necessary. -/
+  def even (n : Nat) : Prop := n % 2 = 0
   def prime (n : Nat) : Prop := sorry
-  def infinitely_many_primes : Prop := sorry
+  def infinitely_many_primes : Prop := ∀ n : Nat, ∃ m : Nat, m > n ∧ prime m
   def Fermat_prime (n : Nat) : Prop := sorry
   def infinitely_many_Fermat_primes : Prop := sorry
   def goldbach_conjecture : Prop := sorry
-  def Goldbach's_weak_conjecture : Prop := sorry
+  def Goldbach's_weak_conjecture : Prop :=
+    ∀ n : Nat, n > 5 → ¬(even n) → ∃ (a b c : Nat), prime a ∧ prime b ∧ prime c ∧ a + b + c = n
   def Fermat's_last_theorem : Prop := sorry
 
   /- 5. Prove as many of the identities listed in the Existential Quantifier section as you can. -/

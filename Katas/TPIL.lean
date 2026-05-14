@@ -346,7 +346,10 @@ namespace Chapter4
           )
       )
 
-  example : (∀ x, r → p x) ↔ (r → ∀ x, p x) := sorry
+  example : (∀ x, r → p x) ↔ (r → ∀ x, p x) :=
+    Iff.intro
+      (fun (h : ∀ x, r → p x) (hr : r) (x : α) => h x hr)
+      (fun (h : r → ∀ x, p x) (x : α) (hr : r) => h hr x)
 
   /- 3. Consider the “barber paradox,” that is, the claim that in a certain town there is a (male) barber that shaves all and only the men who do not shave themselves. Prove that this is a contradiction: -/
   variable (men : Type) (barber : men)

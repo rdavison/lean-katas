@@ -312,12 +312,40 @@ namespace Chapter4
       )
     )
 
-  /- 2. It is often possible to bring a component of a formula outside a universal quantifier, when it does not depend on the quantified variable. Try proving these (one direction of the second of these requires classical logic): -/
+  /- 2. It is often possible to bring a component of a formula outside a universal quantifier,
+        when it does not depend on the quantified variable. Try proving these (one direction of
+        the second of these requires classical logic): -/
   variable (α : Type) (p q : α → Prop)
   variable (r : Prop)
 
-  example : α → ((∀ x : α, r) ↔ r) := sorry
-  example : (∀ x, p x ∨ r) ↔ (∀ x, p x) ∨ r := sorry
+  example : α → ((∀ _ : α, r) ↔ r) :=
+    (fun a : α =>
+      Iff.intro
+        (fun hf : ∀ _ : α, r => hf a)
+        (fun hr : r => (fun _ : α => hr))
+    )
+
+  example : (∀ x, p x ∨ r) ↔ (∀ x, p x) ∨ r :=
+    Iff.intro
+      (fun h : ∀ x, p x ∨ r =>
+        Or.elim (Classical.em r)
+          (fun hr : r => Or.inr hr)
+          (fun hnr : ¬r => Or.inl (fun x : α =>
+            Or.elim (h x)
+              (fun h2 : p x => h2)
+              (fun h2 : r => absurd h2 hnr)
+            ))
+      )
+      (fun h : (∀ x, p x) ∨ r =>
+        Or.elim h
+          (fun hl : ∀ x, p x =>
+            (fun x : α => Or.inl (hl x))
+          )
+          (fun hr : r =>
+            (fun _ : α => Or.inr hr)
+          )
+      )
+
   example : (∀ x, r → p x) ↔ (r → ∀ x, p x) := sorry
 
   /- 3. Consider the “barber paradox,” that is, the claim that in a certain town there is a (male) barber that shaves all and only the men who do not shave themselves. Prove that this is a contradiction: -/

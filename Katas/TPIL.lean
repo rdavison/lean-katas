@@ -426,7 +426,20 @@ namespace Chapter4
             (fun ⟨x, hqx⟩ => ⟨x, Or.inr hqx⟩)
         )
 
-    example : (∀ x, p x) ↔ ¬ (∃ x, ¬ p x) := sorry
+    example : (∀ x, p x) ↔ ¬ (∃ x, ¬ p x) :=
+      Iff.intro
+        (fun (hl : ∀ x, p x) =>
+          (fun h : ∃ x, ¬ p x =>
+            have ⟨x, hnpx⟩ := h
+            hnpx (hl x)
+          )
+        )
+        (fun (hr : ¬ (∃ x, ¬ p x)) =>
+          (fun x : α =>
+            Classical.byContradiction (fun h => hr ⟨x, h⟩)
+          )
+        )
+
     example : (∃ x, p x) ↔ ¬ (∀ x, ¬ p x) := sorry
     example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) := sorry
     example : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) := sorry

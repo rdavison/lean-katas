@@ -412,7 +412,19 @@ namespace Chapter4
           ⟨x, ⟨hpx, hr⟩⟩
         )
 
-    example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) := sorry
+    example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) :=
+      Iff.intro
+        (fun h : ∃ x, p x ∨ q x =>
+          have ⟨x, hpxqx⟩ := h
+          Or.elim hpxqx
+            (fun hpx : p x => Or.inl ⟨x, hpx⟩)
+            (fun hqx : q x => Or.inr ⟨x, hqx⟩)
+        )
+        (fun h : (∃ x, p x) ∨ (∃ x, q x) =>
+          Or.elim h
+            (fun ⟨x, hpx⟩ => ⟨x, Or.inl hpx⟩)
+            (fun ⟨x, hqx⟩ => ⟨x, Or.inr hqx⟩)
+        )
 
     example : (∀ x, p x) ↔ ¬ (∃ x, ¬ p x) := sorry
     example : (∃ x, p x) ↔ ¬ (∀ x, ¬ p x) := sorry

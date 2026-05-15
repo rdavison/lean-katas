@@ -436,7 +436,7 @@ namespace Chapter4
         )
         (fun (hr : ¬ (∃ x, ¬ p x)) =>
           (fun x : α =>
-            Classical.byContradiction (fun h => hr ⟨x, h⟩)
+            byContradiction (fun h => hr ⟨x, h⟩)
           )
         )
 

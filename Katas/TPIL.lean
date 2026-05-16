@@ -458,7 +458,23 @@ namespace Chapter4
           )
         )
 
-    example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) := sorry
+    example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) :=
+      Iff.intro
+        (fun h : ¬ ∃ x, p x =>
+          (fun x : α =>
+            (fun hpx : p x =>
+              h ⟨x, hpx⟩
+            )
+          )
+        )
+        (fun h : ∀ x, ¬ p x =>
+          show ¬ ∃ x, p x from
+          (fun h2 : ∃ x, p x =>
+            have ⟨x, hpx⟩ := h2
+            h x hpx
+          )
+        )
+
     example : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) := sorry
 
     example : (∀ x, p x → r) ↔ (∃ x, p x) → r := sorry

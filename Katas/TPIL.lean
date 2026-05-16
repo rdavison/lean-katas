@@ -428,15 +428,15 @@ namespace Chapter4
 
     example : (∀ x, p x) ↔ ¬ (∃ x, ¬ p x) :=
       Iff.intro
-        (fun (hl : ∀ x, p x) =>
-          (fun h : ∃ x, ¬ p x =>
-            have ⟨x, hnpx⟩ := h
-            hnpx (hl x)
+        (fun h : ∀ x, p x =>
+          (fun h2 : ∃ x, ¬ p x =>
+            have ⟨x, hnpx⟩ := h2
+            hnpx (h x)
           )
         )
-        (fun (hr : ¬ (∃ x, ¬ p x)) =>
+        (fun h : ¬ (∃ x, ¬ p x) =>
           (fun x : α =>
-            byContradiction (fun h => hr ⟨x, h⟩)
+            byContradiction (fun hnp : ¬ p x => h ⟨x, hnp⟩)
           )
         )
 

@@ -493,7 +493,22 @@ namespace Chapter4
           (fun h2 : ∀ x, p x => hnpx (h2 x))
         )
 
-    example : (∀ x, p x → r) ↔ (∃ x, p x) → r := sorry
+    example : (∀ x, p x → r) ↔ (∃ x, p x) → r :=
+      Iff.intro
+        (fun h : ∀ x, p x → r =>
+          show (∃ x, p x) → r from
+          (fun hxpx : ∃ x, p x =>
+            have ⟨x, hpx⟩ := hxpx
+            h x hpx
+          )
+        )
+        (fun h : (∃ x, p x) → r =>
+          show ∀ x, p x → r from
+          (fun (x : α) (hpx : p x) =>
+            h ⟨x, hpx⟩
+          )
+        )
+
     example (a : α) : (∃ x, p x → r) ↔ (∀ x, p x) → r := sorry
     example (a : α) : (∃ x, r → p x) ↔ (r → ∃ x, p x) := sorry
   end WithClassical
